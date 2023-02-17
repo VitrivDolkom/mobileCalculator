@@ -4,28 +4,70 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/app_background"
     tools:context=".MainActivity">
 
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/result"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintBaseline_toTopOf="parent">
+
     <TextView
-        android:id="@+id/textView"
+        android:id="@+id/title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Hello World!"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="36dp"
+        android:text="@string/title"
+        android:textColor="@color/title"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        android:textSize="28sp" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+    <androidx.constraintlayout.helper.widget.Flow
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:constraint_referenced_ids="button_zero,button_one,button_two"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/result"
+        android:layout_paddingRight="16dp"
+        android:layout_paddingLeft="16dp"/>
 
     <Button
-        android:id="@+id/testButton"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="259dp"
-        android:layout_marginBottom="50dp"
-        android:text="@string/test_button"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView" />
+        android:id="@+id/button_zero"
+        android:layout_width="83dp"
+        android:layout_height="83dp"
+        android:background="@color/button_background"
+        android:text="@string/zero"
+        android:textColor="@color/button_text"
+        android:textSize="32sp"
+        />
+
+    <Button
+        android:id="@+id/button_one"
+        android:layout_width="83dp"
+        android:layout_height="83dp"
+        android:background="@color/button_background"
+        android:text="@string/one"
+        android:textColor="@color/button_text"
+        android:textSize="32sp"
+        />
+
+    <Button
+        android:id="@+id/button_two"
+        android:layout_width="83dp"
+        android:layout_height="83dp"
+        android:background="@color/button_background"
+        android:text="@string/two"
+        android:textColor="@color/button_text"
+        android:textSize="32sp"
+        />
+
+
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>
