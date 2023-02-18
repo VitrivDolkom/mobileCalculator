@@ -4,11 +4,11 @@ plugins {
 }
 
 android {
-    namespace 'com.example.secondattempt'
+    namespace 'com.example.calculator'
     compileSdk 33
 
     defaultConfig {
-        applicationId "com.example.secondattempt"
+        applicationId "com.example.calculator"
         minSdk 24
         targetSdk 33
         versionCode 1

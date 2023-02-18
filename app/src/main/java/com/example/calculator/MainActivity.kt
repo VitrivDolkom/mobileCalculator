@@ -1,9 +1,9 @@
-package com.example.secondattempt
+package com.example.calculator
 
 import android.os.Bundle
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
-import com.example.secondattempt.databinding.ActivityMainBinding
+import com.example.calculator.databinding.ActivityMainBinding
 
 
 class MainActivity : AppCompatActivity() {
