@@ -8,7 +8,7 @@
     <androidx.constraintlayout.helper.widget.Flow
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        app:constraint_referenced_ids="expression_title,expression_result_text"
+        app:constraint_referenced_ids="expression_title,expression_result_text,button_erase"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:flow_wrapMode="none"
@@ -31,9 +31,17 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:padding="10dp"
-        android:text="234234234"
+        android:text=""
         android:textColor="@color/expression_result_text"
         android:textSize="51sp" />
+
+    <Button
+        android:id="@+id/button_erase"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Erase"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginEnd="12dp"/>
 
 
 

@@ -20,7 +20,7 @@
     <Button
         style="@style/CalculatorButtonStyle"
         android:id="@+id/button_ac"
-        android:text="@string/ac"/>
+        android:text="@string/ac" />
 
     <Button
         style="@style/CalculatorButtonStyle"
