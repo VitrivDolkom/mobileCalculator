@@ -22,6 +22,5 @@ class MainActivity : AppCompatActivity() {
             val newExpressionText = expressionText.text.toString() + "1"
             expressionText.text = newExpressionText
         }
-
     }
 }
