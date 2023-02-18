@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <androidx.constraintlayout.helper.widget.Flow
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        app:constraint_referenced_ids="button_ac,button_plus_minus,button_percent,button_divide,button_seven,button_eight,button_nine,button_multiplication,button_four,button_five,button_six,button_minus,button_one,button_two,button_three,button_plus,button_zero,button_comma,button_equal"
+        app:flow_horizontalGap="16dp"
+        app:flow_horizontalStyle="spread"
+        app:flow_verticalGap="16dp"
+        app:flow_verticalStyle="spread"
+        app:flow_wrapMode="aligned"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"/>
+
+    <Button
+        style="@style/CalculatorButtonStyle"
+        android:id="@+id/button_ac"
+        android:text="@string/ac"/>
+
+    <Button
+        style="@style/CalculatorButtonStyle"
+        android:id="@+id/button_plus_minus"
+        android:text="@string/plus_minus"/>
+
+    <Button
+        style="@style/CalculatorButtonStyle"
+        android:id="@+id/button_percent"
+        android:text="@string/percent"/>
+
+    <Button
+        style="@style/CalculatorButtonStyle.Red"
+        android:id="@+id/button_divide"
+        android:text="@string/divide" />
+
+    <Button
+        style="@style/CalculatorButtonStyle"
+        android:id="@+id/button_seven"
+        android:text="@string/seven" />
+
+    <Button
+        style="@style/CalculatorButtonStyle"
+        android:id="@+id/button_eight"
+        android:text="@string/eight" />
+
+    <Button
+        style="@style/CalculatorButtonStyle"
+        android:id="@+id/button_nine"
+        android:text="@string/nine" />
+
+    <Button
+        style="@style/CalculatorButtonStyle.Red"
+        android:id="@+id/button_multiplication"
+        android:text="@string/multiplication" />
+
+    <Button
+        style="@style/CalculatorButtonStyle"
+        android:id="@+id/button_four"
+        android:text="@string/four" />
+
+    <Button
+        style="@style/CalculatorButtonStyle"
+        android:id="@+id/button_five"
+        android:text="@string/five" />
+
+    <Button
+        style="@style/CalculatorButtonStyle"
+        android:id="@+id/button_six"
+        android:text="@string/six" />
+
+    <Button
+        style="@style/CalculatorButtonStyle.Red"
+        android:id="@+id/button_minus"
+        android:text="@string/minus" />
+
+    <Button
+        style="@style/CalculatorButtonStyle"
+        android:id="@+id/button_one"
+        android:text="@string/one" />
+
+    <Button
+        style="@style/CalculatorButtonStyle"
+        android:id="@+id/button_two"
+        android:text="@string/two" />
+
+    <Button
+        style="@style/CalculatorButtonStyle"
+        android:id="@+id/button_three"
+        android:text="@string/three"/>
+
+    <Button
+        style="@style/CalculatorButtonStyle.Red"
+        android:id="@+id/button_plus"
+        android:text="@string/plus"/>
+
+    <Button
+        style="@style/CalculatorButtonStyle"
+        android:id="@+id/button_zero"
+        android:text="@string/zero" />
+
+    <Button
+        style="@style/CalculatorButtonStyle"
+        android:id="@+id/button_comma"
+        android:text="@string/comma" />
+
+    <Button
+        style="@style/CalculatorButtonStyle.Red"
+        android:id="@+id/button_equal"
+        android:text="@string/equal" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
