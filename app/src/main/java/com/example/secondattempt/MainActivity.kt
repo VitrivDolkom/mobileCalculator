@@ -19,7 +19,8 @@ class MainActivity : AppCompatActivity() {
         val expressionText: TextView = binding.expression.expressionResultText
 
         binding.buttons.buttonOne.setOnClickListener{
-            expressionText.text = "1"
+            val newExpressionText = expressionText.text.toString() + "1"
+            expressionText.text = newExpressionText
         }
 
     }
