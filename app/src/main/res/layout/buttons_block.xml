@@ -13,7 +13,7 @@
         app:flow_horizontalStyle="spread"
         app:flow_verticalGap="16dp"
         app:flow_verticalStyle="spread"
-        app:flow_wrapMode="chain"
+        app:flow_wrapMode="aligned"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"/>
 
@@ -95,12 +95,14 @@
     <Button
         style="@style/CalculatorButtonStyle.Red"
         android:id="@+id/button_plus"
-        android:text="@string/plus"/>
+        android:text="@string/plus"
+        />
 
     <Button
         style="@style/CalculatorButtonStyle"
         android:id="@+id/button_zero"
-        android:text="@string/zero" />
+        android:text="@string/zero"
+        android:layout_width="0dp"/>
 
     <Button
         style="@style/CalculatorButtonStyle"
