@@ -44,7 +44,8 @@
         app:layout_constraintEnd_toEndOf="parent"
         android:src="@drawable/erase"
         android:background="@color/app_background"
-        android:contentDescription="@string/erase_description"/>
+        android:contentDescription="@string/erase_description"
+        android:onClick="eraseSymbol"/>
 
 
 

@@ -6,6 +6,7 @@
         <item name="android:textColor">@color/button_text</item>
         <item name="android:textSize">32sp</item>
         <item name="cornerRadius">32dp</item>
+        <item name="android:onClick">onButtonsClick</item>
     </style>
 
     <style name="CalculatorButtonStyle.Red">
