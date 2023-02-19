@@ -23,7 +23,7 @@
         android:layout_height="1dp"
         android:background="@color/line_background"
         app:layout_constraintTop_toBottomOf="@id/expression"
-        app:layout_constraintStart_toStartOf="parent"/>
+        app:layout_constraintStart_toStartOf="parent" />
 
     <include
         android:id="@+id/buttons"
