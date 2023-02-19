@@ -9,8 +9,8 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         app:constraint_referenced_ids="button_ac,button_plus_minus,button_percent,button_divide,button_seven,button_eight,button_nine,button_multiplication,button_four,button_five,button_six,button_minus,button_one,button_two,button_three,button_plus,button_zero,button_comma,button_equal"
-        app:flow_horizontalGap="0dp"
-        app:flow_verticalGap="0dp"
+        app:flow_horizontalGap="4dp"
+        app:flow_verticalGap="4dp"
         app:flow_wrapMode="chain"
         app:flow_maxElementsWrap="4"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -42,6 +42,7 @@
         android:layout_width="0dp"
         android:layout_height="0dp"
         app:layout_constraintWidth_percent="0.22"
+        android:maxWidth="100dp"
         app:layout_constraintHeight_percent="0.15"/>
 
     <Button

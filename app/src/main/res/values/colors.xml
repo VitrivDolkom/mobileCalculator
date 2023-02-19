@@ -13,5 +13,5 @@
     <color name="button_background_red">#633B48</color>
     <color name="button_text">#E8DEF8</color>
     <color name="expression_result_text">#D0BCFF</color>
-    <color name="erase_button_background"></color>
+    <color name="line_background">#49454F</color>
 </resources>

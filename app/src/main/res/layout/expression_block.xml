@@ -15,7 +15,8 @@
         android:orientation="vertical"
         app:flow_horizontalAlign="start"
         android:paddingTop="16dp"
-        android:paddingBottom="16dp"/>
+        android:paddingBottom="16dp"
+        android:background="@color/app_background"/>
 
     <TextView
         android:id="@+id/expression_title"
@@ -41,7 +42,8 @@
         app:layout_constraintEnd_toEndOf="parent"
         android:layout_marginEnd="10dp"
         android:src="@drawable/erase"
-        android:background="@color/erase_button_background"/>
+        android:background="@color/app_background"
+        android:contentDescription="@string/erase_description"/>
 
 
 
