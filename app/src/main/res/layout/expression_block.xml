@@ -43,7 +43,7 @@
         android:maxHeight="18dp"
         app:layout_constraintEnd_toEndOf="parent"
         android:src="@drawable/erase"
-        android:background="none"
+        android:background="@color/app_background"
         android:contentDescription="@string/erase_description"/>
 
 
