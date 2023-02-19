@@ -37,6 +37,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun addToViewText(view: TextView, symbolToAdd: Char) {
-        view.text = view.text.toString() + symbolToAdd
+        val newText = view.text.toString() + symbolToAdd
+        view.text = newText
     }
 }
