@@ -18,16 +18,18 @@ class MainActivity : AppCompatActivity() {
         setContentView(view)
     }
     
-    fun eraseSymbol(it: View) {
-        var expressionText = binding.expression.expressionResultText.text
+    fun onEraseButtonClick(it: View) {
+        val expressionText = binding.expression.expressionResultText.text
         
         binding.expression.expressionResultText.text = expressionText.toString().replaceFirst(".$".toRegex(), "")
     }
     
-    fun onButtonsClick(it: View) {
+    fun onCalculatorButtonsClick(it: View) {
         val btn = it as Button
         
-        val newText = binding.expression.expressionResultText.text.toString() + btn.text
+        val newText = ce.validatedExpressionWithNewSymbol(
+            btn.text.toString(), binding.expression.expressionResultText.text.toString()
+        )
         
         binding.expression.expressionResultText.text = newText
     }

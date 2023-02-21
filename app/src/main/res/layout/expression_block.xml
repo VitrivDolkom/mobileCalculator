@@ -44,7 +44,6 @@
         android:src="@drawable/erase"
         android:background="@color/app_background"
         android:contentDescription="@string/erase_description"
-        android:onClick="eraseSymbol" />
-
+        android:onClick="onEraseButtonClick" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
