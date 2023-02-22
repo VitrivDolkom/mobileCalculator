@@ -1,6 +1,6 @@
 package com.example.calculator
 
-class CalculateExpression() {
+class CalculateExpression {
     private val availActions = arrayOf("+", "-", "÷", "%", "×")
     private val tabooActions = arrayOf("AC", "±", ",")
     
@@ -33,6 +33,10 @@ class CalculateExpression() {
             }
         }
         
+        if (actionSymbol.toString() == "÷" && secondNumber == "0") {
+            return "Error"
+        }
+        
         var result = 0
         
         when (actionSymbol.toString()) {
@@ -47,30 +51,41 @@ class CalculateExpression() {
     }
     
     fun validatedExpressionWithNewSymbol(newSymbol: String, expressionText: String): String {
-        var result = expressionText
+        val validExpression = expressionText
         
-        if (newSymbol in tabooActions || (result == "" && newSymbol in availActions) || (result == "Error" && newSymbol in availActions)) {
+        if (newSymbol in tabooActions || (validExpression == "" && newSymbol in availActions) || (validExpression == "Error" && newSymbol in availActions)) {
             return "Error"
         }
         
-        if (result == "Error") {
+        if (validExpression == "Error") {
             return newSymbol
-        } else if (result == "") {
-            return result + newSymbol
+        } else if (validExpression == "") {
+            return validExpression + newSymbol
         }
         
-        val lastSymbol = result[result.count() - 1].toString()
+        val lastSymbol = validExpression[validExpression.count() - 1].toString()
         if (lastSymbol in availActions && newSymbol in availActions) {
-            return result.toString().replaceFirst(".$".toRegex(), "") + newSymbol
+            return validExpression.replaceFirst(".$".toRegex(), "") + newSymbol
         }
         
-        if (newSymbol == "=") {
-            return calculate(result)
-        } else if (newSymbol in availActions && isActionInExpression(expressionText)) {
-            return calculate(result) + newSymbol
+        if (newSymbol !in availActions && newSymbol != "=") {
+            return validExpression + newSymbol
         }
         
+        if (!isActionInExpression(validExpression) && newSymbol in availActions) {
+            return validExpression + newSymbol
+        }
         
-        return result + newSymbol
+        val answer = calculate(validExpression)
+        
+        if (answer == "Error" || newSymbol == "=") {
+            return answer
+        }
+        
+        if (newSymbol in availActions && isActionInExpression(expressionText)) {
+            return answer + newSymbol
+        }
+        
+        return validExpression + newSymbol
     }
 }

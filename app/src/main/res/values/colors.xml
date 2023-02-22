@@ -14,4 +14,5 @@
     <color name="button_text">#E8DEF8</color>
     <color name="expression_result_text">#D0BCFF</color>
     <color name="line_background">#49454F</color>
+    <color name="text_error_expression">#F2B8B5</color>
 </resources>
