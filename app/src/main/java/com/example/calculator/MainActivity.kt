@@ -24,11 +24,16 @@ class MainActivity : AppCompatActivity() {
         binding.expression.expressionResultText.text = expressionText.toString().replaceFirst(".$".toRegex(), "")
     }
     
+    fun setExpressionColor(color: Int) {
+        binding.expression.expressionResultText.setTextColor(color)
+    }
+    
     fun onCalculatorButtonsClick(it: View) {
         val btn = it as Button
         
         if (btn.text.toString() == "AC") {
             binding.expression.expressionResultText.text = "0"
+            setExpressionColor(getColor(R.color.expression_result_text))
             return;
         }
         
@@ -37,9 +42,9 @@ class MainActivity : AppCompatActivity() {
         )
         
         if (newText == "Error") {
-            binding.expression.expressionResultText.setTextColor(getColor(R.color.text_error_expression))
+            setExpressionColor(getColor(R.color.text_error_expression))
         } else {
-            binding.expression.expressionResultText.setTextColor(getColor(R.color.expression_result_text))
+            setExpressionColor(getColor(R.color.expression_result_text))
         }
         
         binding.expression.expressionResultText.text = newText

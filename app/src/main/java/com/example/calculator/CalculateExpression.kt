@@ -4,7 +4,7 @@ import kotlin.math.floor
 
 class CalculateExpression {
     private val availActions = arrayOf("+", "-", "÷", "%", "×")
-    private val tabooActions = arrayOf("AC", "±", ",")
+    private val tabooActions = arrayOf("±")
     
     private fun isActionInExpression(expression: String): Boolean {
         for (a in expression) {
@@ -41,7 +41,7 @@ class CalculateExpression {
             return "Error"
         }
         
-        var result = 0.0
+        var result: Double = 0.0
         
         // calculate expression
         when (actionSymbol.toString()) {
@@ -50,6 +50,10 @@ class CalculateExpression {
             "%" -> result = firstNumber.toDouble() % secondNumber.toDouble()
             "×" -> result = firstNumber.toDouble() * secondNumber.toDouble()
             "÷" -> result = firstNumber.toDouble() / secondNumber.toDouble()
+        }
+        
+        if (result.toInt().toDouble() == result) {
+            return result.toInt().toString()
         }
         
         val roundedResult = floor(result * 100.0) / 100.0
