@@ -8,7 +8,7 @@ import com.example.calculator.databinding.ActivityMainBinding
 
 class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
-    private val ce = CalculateExpression()
+    private val calculateExpression = CalculateExpression()
     
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -27,9 +27,20 @@ class MainActivity : AppCompatActivity() {
     fun onCalculatorButtonsClick(it: View) {
         val btn = it as Button
         
-        val newText = ce.validatedExpressionWithNewSymbol(
+        if (btn.text.toString() == "AC") {
+            binding.expression.expressionResultText.text = "0"
+            return;
+        }
+        
+        val newText = calculateExpression.validatedExpressionWithNewSymbol(
             btn.text.toString(), binding.expression.expressionResultText.text.toString()
         )
+        
+        if (newText == "Error") {
+            binding.expression.expressionResultText.setTextColor(getColor(R.color.text_error_expression))
+        } else {
+            binding.expression.expressionResultText.setTextColor(getColor(R.color.expression_result_text))
+        }
         
         binding.expression.expressionResultText.text = newText
     }

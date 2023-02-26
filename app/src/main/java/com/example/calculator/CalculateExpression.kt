@@ -39,15 +39,15 @@ class CalculateExpression {
             return "Error"
         }
         
-        var result = 0
+        var result = 0.0
         
         // calculate expression
         when (actionSymbol.toString()) {
-            "+" -> result = firstNumber.toInt() + secondNumber.toInt()
-            "-" -> result = firstNumber.toInt() - secondNumber.toInt()
-            "%" -> result = firstNumber.toInt() % secondNumber.toInt()
-            "×" -> result = firstNumber.toInt() * secondNumber.toInt()
-            "÷" -> result = firstNumber.toInt() / secondNumber.toInt()
+            "+" -> result = firstNumber.toDouble() + secondNumber.toDouble()
+            "-" -> result = firstNumber.toDouble() - secondNumber.toDouble()
+            "%" -> result = firstNumber.toDouble() % secondNumber.toDouble()
+            "×" -> result = firstNumber.toDouble() * secondNumber.toDouble()
+            "÷" -> result = firstNumber.toDouble() / secondNumber.toDouble()
         }
         
         return result.toString()
