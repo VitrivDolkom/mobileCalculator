@@ -32,7 +32,8 @@
         android:padding="10dp"
         android:text=""
         android:textColor="@color/expression_result_text"
-        android:textSize="51sp" />
+        android:textSize="51sp"
+        android:maxLength="10" />
 
     <ImageButton
         android:id="@+id/button_erase"

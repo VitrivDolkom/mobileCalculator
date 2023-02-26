@@ -1,5 +1,7 @@
 package com.example.calculator
 
+import kotlin.math.floor
+
 class CalculateExpression {
     private val availActions = arrayOf("+", "-", "÷", "%", "×")
     private val tabooActions = arrayOf("AC", "±", ",")
@@ -50,7 +52,9 @@ class CalculateExpression {
             "÷" -> result = firstNumber.toDouble() / secondNumber.toDouble()
         }
         
-        return result.toString()
+        val roundedResult = floor(result * 100.0) / 100.0
+        
+        return roundedResult.toString()
     }
     
     fun validatedExpressionWithNewSymbol(newSymbol: String, expressionText: String): String {
