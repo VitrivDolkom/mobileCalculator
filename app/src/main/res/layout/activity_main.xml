@@ -15,10 +15,11 @@
         layout="@layout/expression_block"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        app:layout_constraintHeight_percent="0.4"
-        app:layout_constraintStart_toStartOf="parent"/>
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintBottom_toTopOf="@id/divider" />
 
     <View
+        android:id="@+id/divider"
         android:layout_width="wrap_content"
         android:layout_height="1dp"
         android:background="@color/line_background"
@@ -32,6 +33,5 @@
         app:layout_constraintBottom_toBottomOf="parent"
         android:layout_width="match_parent"
         android:layout_height="0dp" />
-
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -52,6 +52,7 @@ class CalculateExpression {
             "÷" -> result = firstNumber.toDouble() / secondNumber.toDouble()
         }
         
+        // extra zero in double number
         if (result.toInt().toDouble() == result) {
             return result.toInt().toString()
         }
