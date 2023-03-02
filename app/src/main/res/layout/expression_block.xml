@@ -15,7 +15,8 @@
         app:flow_horizontalAlign="start"
         android:paddingTop="16dp"
         android:paddingBottom="16dp"
-        android:background="@color/app_background" />
+        android:background="@color/app_background"
+        />
 
     <TextView
         android:id="@+id/expression_title"
@@ -23,7 +24,8 @@
         android:layout_height="wrap_content"
         android:text="@string/title"
         android:textColor="@color/title"
-        android:textSize="28sp" />
+        android:textSize="28sp"
+        />
 
     <TextView
         android:id="@+id/expression_result_text"
@@ -33,7 +35,8 @@
         android:text=""
         android:textColor="@color/expression_result_text"
         android:textSize="51sp"
-        android:maxLength="10" />
+        android:maxLength="10"
+        />
 
     <ImageButton
         android:id="@+id/button_erase"
@@ -45,6 +48,6 @@
         android:src="@drawable/erase"
         android:background="@color/app_background"
         android:contentDescription="@string/erase_description"
-        android:onClick="onEraseButtonClick" />
+        />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

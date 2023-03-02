@@ -15,16 +15,26 @@ class MainActivity : AppCompatActivity() {
         binding = ActivityMainBinding.inflate(layoutInflater)
         val view = binding.root
         
+        binding.expression.buttonErase.setOnClickListener {
+            val expressionText = binding.expression.expressionResultText.text
+            
+            binding.expression.expressionResultText.text = expressionText.toString().replaceFirst(".$".toRegex(), "")
+        }
+        
+        val operationButtonIds = arrayOf(
+            binding.buttons.buttonPlus,
+            binding.buttons.buttonMinus,
+            binding.buttons.buttonPercent,
+            binding.buttons.buttonMultiplication,
+            binding.buttons.buttonDivide,
+            binding.buttons.buttonEqual
+        )
+        
+        
         setContentView(view)
     }
     
-    fun onEraseButtonClick(it: View) {
-        val expressionText = binding.expression.expressionResultText.text
-        
-        binding.expression.expressionResultText.text = expressionText.toString().replaceFirst(".$".toRegex(), "")
-    }
-    
-    fun setExpressionColor(color: Int) {
+    private fun setExpressionColor(color: Int) {
         binding.expression.expressionResultText.setTextColor(color)
     }
     
