@@ -1,24 +1,58 @@
 package com.example.calculator
 
 import android.os.Bundle
-import android.view.View
-import android.widget.Button
 import androidx.appcompat.app.AppCompatActivity
+import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProvider
 import com.example.calculator.databinding.ActivityMainBinding
 
 class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
     private val calculateExpression = CalculateExpression()
+    lateinit var viewModel: MainActivityViewModel
     
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        
         binding = ActivityMainBinding.inflate(layoutInflater)
         val view = binding.root
         
-        binding.expression.buttonErase.setOnClickListener {
-            val expressionText = binding.expression.expressionResultText.text
+        viewModel = ViewModelProvider(this).get(MainActivityViewModel::class.java)
+        viewModel.currentExpression.observe(this, Observer {
+            binding.expression.expressionResultText.text = it.toString()
             
-            binding.expression.expressionResultText.text = expressionText.toString().replaceFirst(".$".toRegex(), "")
+            if (it.toString() == "Error") {
+                binding.expression.expressionResultText.setTextColor(getColor(R.color.text_error_expression))
+            } else {
+                binding.expression.expressionResultText.setTextColor(getColor(R.color.expression_result_text))
+            }
+        })
+        
+        changeExpression()
+        
+        setContentView(view)
+    }
+    
+    private fun changeExpression() {
+        val numberButtonIds = arrayOf(
+            binding.buttons.buttonZero,
+            binding.buttons.buttonOne,
+            binding.buttons.buttonTwo,
+            binding.buttons.buttonThree,
+            binding.buttons.buttonFour,
+            binding.buttons.buttonFive,
+            binding.buttons.buttonSix,
+            binding.buttons.buttonSeven,
+            binding.buttons.buttonEight,
+            binding.buttons.buttonNine,
+            binding.buttons.buttonComma
+        )
+        
+        for (button in numberButtonIds) {
+            button.setOnClickListener {
+                viewModel.expression += button.text
+                viewModel.currentExpression.value = viewModel.expression
+            }
         }
         
         val operationButtonIds = arrayOf(
@@ -30,33 +64,24 @@ class MainActivity : AppCompatActivity() {
             binding.buttons.buttonEqual
         )
         
-        
-        setContentView(view)
-    }
-    
-    private fun setExpressionColor(color: Int) {
-        binding.expression.expressionResultText.setTextColor(color)
-    }
-    
-    fun onCalculatorButtonsClick(it: View) {
-        val btn = it as Button
-        
-        if (btn.text.toString() == "AC") {
-            binding.expression.expressionResultText.text = "0"
-            setExpressionColor(getColor(R.color.expression_result_text))
-            return;
+        for (button in operationButtonIds) {
+            button.setOnClickListener {
+                viewModel.expression = calculateExpression.validatedExpressionWithNewSymbol(
+                    button.text.toString(), binding.expression.expressionResultText.text.toString()
+                )
+                
+                viewModel.currentExpression.value = viewModel.expression
+            }
         }
         
-        val newText = calculateExpression.validatedExpressionWithNewSymbol(
-            btn.text.toString(), binding.expression.expressionResultText.text.toString()
-        )
-        
-        if (newText == "Error") {
-            setExpressionColor(getColor(R.color.text_error_expression))
-        } else {
-            setExpressionColor(getColor(R.color.expression_result_text))
+        binding.expression.buttonErase.setOnClickListener {
+            viewModel.expression = viewModel.expression.replaceFirst(".$".toRegex(), "")
+            viewModel.currentExpression.value = viewModel.expression
         }
         
-        binding.expression.expressionResultText.text = newText
+        binding.buttons.buttonAc.setOnClickListener {
+            viewModel.expression = "0"
+            viewModel.currentExpression.value = viewModel.expression
+        }
     }
 }
