@@ -18,6 +18,12 @@ class MainActivity : AppCompatActivity() {
         val view = binding.root
         
         viewModel = ViewModelProvider(this).get(MainActivityViewModel::class.java)
+        changeExpression()
+        
+        setContentView(view)
+    }
+    
+    private fun changeExpression() {
         viewModel.currentExpression.observe(this, Observer {
             binding.expression.expressionResultText.text = it.toString()
             
@@ -28,12 +34,6 @@ class MainActivity : AppCompatActivity() {
             }
         })
         
-        changeExpression()
-        
-        setContentView(view)
-    }
-    
-    private fun changeExpression() {
         val numberButtonIds = arrayOf(
             binding.buttons.buttonZero,
             binding.buttons.buttonOne,
