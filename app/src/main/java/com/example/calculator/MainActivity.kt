@@ -9,7 +9,7 @@ import com.example.calculator.databinding.ActivityMainBinding
 class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
     private val calculateExpression = CalculateExpression()
-    lateinit var viewModel: MainActivityViewModel
+    private lateinit var viewModel: MainActivityViewModel
     
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -17,7 +17,7 @@ class MainActivity : AppCompatActivity() {
         binding = ActivityMainBinding.inflate(layoutInflater)
         val view = binding.root
         
-        viewModel = ViewModelProvider(this).get(MainActivityViewModel::class.java)
+        viewModel = ViewModelProvider(this)[MainActivityViewModel::class.java]
         changeExpression()
         
         setContentView(view)
