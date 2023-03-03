@@ -41,7 +41,7 @@ class CalculateExpression {
             return "Error"
         }
         
-        var result: Double = 0.0
+        var result = 0.0
         
         // calculate expression
         when (actionSymbol.toString()) {
@@ -63,38 +63,37 @@ class CalculateExpression {
     }
     
     fun validatedExpressionWithNewSymbol(newSymbol: String, expressionText: String): String {
-        val validExpression = expressionText
         
         // show error message
-        if (newSymbol in tabooActions || (validExpression == "" && newSymbol in availActions) || (validExpression == "Error" && newSymbol in availActions)) {
+        if (newSymbol in tabooActions || (expressionText == "" && newSymbol in availActions) || (expressionText == "Error" && newSymbol in availActions)) {
             return "Error"
         }
         
         // show new expression if there was error or empty line
-        if (validExpression == "Error") {
+        if (expressionText == "Error") {
             return newSymbol
-        } else if (validExpression == "") {
-            return validExpression + newSymbol
+        } else if (expressionText == "") {
+            return expressionText + newSymbol
         }
         
         // replace last action
-        val lastSymbol = validExpression[validExpression.count() - 1].toString()
+        val lastSymbol = expressionText[expressionText.count() - 1].toString()
         if (lastSymbol in availActions && newSymbol in availActions) {
-            return validExpression.replaceFirst(".$".toRegex(), "") + newSymbol
+            return expressionText.replaceFirst(".$".toRegex(), "") + newSymbol
         }
         
         // add number
         if (newSymbol !in availActions && newSymbol != "=") {
-            return validExpression + newSymbol
+            return expressionText + newSymbol
         }
         
         // add action
-        if (!isActionInExpression(validExpression) && newSymbol in availActions) {
-            return validExpression + newSymbol
+        if (!isActionInExpression(expressionText) && newSymbol in availActions) {
+            return expressionText + newSymbol
         }
         
         // calculate
-        val answer = calculate(validExpression)
+        val answer = calculate(expressionText)
         
         // print answer if error or equal action
         if (answer == "Error" || newSymbol == "=") {
@@ -106,6 +105,6 @@ class CalculateExpression {
             return answer + newSymbol
         }
         
-        return validExpression + newSymbol
+        return expressionText + newSymbol
     }
 }

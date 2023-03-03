@@ -15,8 +15,10 @@
         layout="@layout/expression_block"
         android:layout_width="match_parent"
         android:layout_height="0dp"
+        app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintBottom_toTopOf="@id/divider" />
+        app:layout_constraintBottom_toTopOf="@id/divider"
+        />
 
     <View
         android:id="@+id/divider"
@@ -24,7 +26,8 @@
         android:layout_height="1dp"
         android:background="@color/line_background"
         app:layout_constraintTop_toBottomOf="@id/expression"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintStart_toStartOf="parent"
+        />
 
     <include
         android:id="@+id/buttons"
@@ -32,6 +35,8 @@
         app:layout_constraintTop_toBottomOf="@id/expression"
         app:layout_constraintBottom_toBottomOf="parent"
         android:layout_width="match_parent"
-        android:layout_height="0dp" />
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="32dp"
+        />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
