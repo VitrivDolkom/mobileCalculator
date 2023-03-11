@@ -10,7 +10,7 @@
         <item name="android:layout_marginTop">16dp</item>
     </style>
 
-    <style name="CalculatorButtonStyle.Red">
+    <style name="CalculatorButtonStyle.Accent">
         <item name="android:background">@drawable/round_corners_red</item>
     </style>
 
