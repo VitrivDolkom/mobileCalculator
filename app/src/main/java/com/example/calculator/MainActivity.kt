@@ -1,30 +1,26 @@
 package com.example.calculator
 
 import android.os.Bundle
+import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
-import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProvider
 import com.example.calculator.databinding.ActivityMainBinding
 
 class MainActivity : AppCompatActivity() {
-    private lateinit var binding: ActivityMainBinding
+    private val binding by lazy { ActivityMainBinding.inflate(layoutInflater) }
+    private val viewModel by viewModels<MainActivityViewModel>()
+    
     private val calculateExpression = CalculateExpression()
-    private lateinit var viewModel: MainActivityViewModel
     
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         
-        binding = ActivityMainBinding.inflate(layoutInflater)
         val view = binding.root
-        
-        viewModel = ViewModelProvider(this)[MainActivityViewModel::class.java]
         changeExpression()
-        
         setContentView(view)
     }
     
     private fun changeExpression() {
-        viewModel.currentExpression.observe(this, Observer {
+        viewModel.currentExpression.observe(this) {
             binding.expression.expressionResultText.text = it.toString()
             
             if (it.toString() == "Error") {
@@ -32,7 +28,7 @@ class MainActivity : AppCompatActivity() {
             } else {
                 binding.expression.expressionResultText.setTextColor(getColor(R.color.expression_result_text))
             }
-        })
+        }
         
         val numberButtonIds = arrayOf(
             binding.buttons.buttonZero,
