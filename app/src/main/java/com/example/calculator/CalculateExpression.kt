@@ -1,110 +1,107 @@
 package com.example.calculator
 
-import kotlin.math.floor
-
 class CalculateExpression {
-    private val availActions = arrayOf("+", "-", "÷", "%", "×")
-    private val tabooActions = arrayOf("±")
+    companion object {
+        val numberOperations = arrayOf(
+            Operation.ZERO,
+            Operation.ONE,
+            Operation.TWO,
+            Operation.THREE,
+            Operation.FOUR,
+            Operation.FIVE,
+            Operation.SIX,
+            Operation.SEVEN,
+            Operation.EIGHT,
+            Operation.NINE
+        )
+        
+        val mathOperations = arrayOf(
+            Operation.PLUS,
+            Operation.MINUS,
+            Operation.DIVIDE,
+            Operation.PERCENT,
+            Operation.MULTIPLICATION,
+            Operation.COMMA,
+            Operation.EQUAL
+        )
+        
+        const val errorMessage = "Error"
+    }
+    
+    private var firstOperandSign: Operation? = null
+    private var firstOperand = ""
+    private var secondOperand = ""
+    private var expressionOperation: Operation? = null
+    private var isError = false
     
     private fun isActionInExpression(expression: String): Boolean {
-        for (a in expression) {
-            for (b in availActions) {
-                if (a.toString() == b) {
-                    return true
-                }
-            }
-        }
-        
-        return false
+        val regex = ".*[+\\-*%±×÷].*".toRegex()
+        return regex.containsMatchIn(expression)
     }
     
-    private fun calculate(expression: String): String {
-        var actionSymbol = '+'
-        var firstNumber = ""
-        var secondNumber = ""
-        var isActionFound = false
-        
-        // get action, first and second numbers in expression
-        for (symbol in expression) {
-            if (symbol.toString() in availActions) {
-                actionSymbol = symbol
-                isActionFound = true
-            } else if (isActionFound) {
-                secondNumber += symbol
-            } else {
-                firstNumber += symbol
-            }
-        }
-        
-        // check divide by zero
-        if (actionSymbol.toString() == "÷" && secondNumber == "0") {
-            return "Error"
-        }
-        
-        var result = 0.0
-        
-        // calculate expression
-        when (actionSymbol.toString()) {
-            "+" -> result = firstNumber.toDouble() + secondNumber.toDouble()
-            "-" -> result = firstNumber.toDouble() - secondNumber.toDouble()
-            "%" -> result = firstNumber.toDouble() % secondNumber.toDouble()
-            "×" -> result = firstNumber.toDouble() * secondNumber.toDouble()
-            "÷" -> result = firstNumber.toDouble() / secondNumber.toDouble()
-        }
-        
-        // extra zero in double number
-        if (result.toInt().toDouble() == result) {
-            return result.toInt().toString()
-        }
-        
-        val roundedResult = floor(result * 100.0) / 100.0
-        
-        return roundedResult.toString()
+    private fun calculate(expression: String) {
     }
     
-    fun validatedExpressionWithNewSymbol(newSymbol: String, expressionText: String): String {
-        
-        // show error message
-        if (newSymbol in tabooActions || (expressionText == "" && newSymbol in availActions) || (expressionText == "Error" && newSymbol in availActions)) {
-            return "Error"
+    private fun getExpression(): String {
+        var expression = ""
+        if (firstOperandSign != null) {
+            expression += firstOperandSign.toString()
         }
         
-        // show new expression if there was error or empty line
-        if (expressionText == "Error") {
-            return newSymbol
-        } else if (expressionText == "") {
-            return expressionText + newSymbol
+        expression += firstOperand
+        
+        if (expressionOperation != null) {
+            expression += expressionOperation.toString() + secondOperand
         }
         
-        // replace last action
-        val lastSymbol = expressionText[expressionText.count() - 1].toString()
-        if (lastSymbol in availActions && newSymbol in availActions) {
-            return expressionText.replaceFirst(".$".toRegex(), "") + newSymbol
+        return expression
+    }
+    
+    private fun changeFirstOperandSign() {
+        if (firstOperandSign == null) {
+            firstOperandSign = Operation.MINUS
+            return
         }
         
-        // add number
-        if (newSymbol !in availActions && newSymbol != "=") {
-            return expressionText + newSymbol
+        firstOperandSign = null
+    }
+    
+    private fun onNumberOperation(expression: String?, operation: Operation) {
+        if (expressionOperation == null) {
+            firstOperand += operation.Symbol
+        } else {
+            secondOperand += operation.Symbol
+        }
+    }
+    
+    private fun onMathOperation(expression: String?, operation: Operation) {
+        if (expression == null) {
+            isError = true
+            return
         }
         
-        // add action
-        if (!isActionInExpression(expressionText) && newSymbol in availActions) {
-            return expressionText + newSymbol
+        if (expressionOperation != null && expression.indexOf(expressionOperation.toString()) == (expression.length - 1)) {
+            expressionOperation = operation
+            return
         }
         
-        // calculate
-        val answer = calculate(expressionText)
-        
-        // print answer if error or equal action
-        if (answer == "Error" || newSymbol == "=") {
-            return answer
+        if (operation == Operation.PLUS_MINUS) {
+            changeFirstOperandSign()
+            return
+        }
+    }
+    
+    fun getValidatedExpression(expression: String?, operation: Operation): String {
+        if (operation in numberOperations) {
+            onNumberOperation(expression, operation)
+        } else {
+            onMathOperation(expression, operation)
         }
         
-        // print answer if new action
-        if (newSymbol in availActions && isActionInExpression(expressionText)) {
-            return answer + newSymbol
+        if (isError) {
+            return errorMessage;
         }
         
-        return expressionText + newSymbol
+        return getExpression()
     }
 }
