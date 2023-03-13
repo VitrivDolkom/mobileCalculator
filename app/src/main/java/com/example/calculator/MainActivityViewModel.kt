@@ -13,6 +13,7 @@ class MainActivityViewModel : ViewModel() {
     fun changeExpression(operation: Operation) {
         if (operation == Operation.RESET) {
             _currentExpression.value = ""
+            calculateExpression.resetExpression();
             return
         }
         

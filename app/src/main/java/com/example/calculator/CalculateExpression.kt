@@ -1,30 +1,9 @@
 package com.example.calculator
 
+import kotlin.math.floor
+
 class CalculateExpression {
     companion object {
-        val numberOperations = arrayOf(
-            Operation.ZERO,
-            Operation.ONE,
-            Operation.TWO,
-            Operation.THREE,
-            Operation.FOUR,
-            Operation.FIVE,
-            Operation.SIX,
-            Operation.SEVEN,
-            Operation.EIGHT,
-            Operation.NINE
-        )
-        
-        val mathOperations = arrayOf(
-            Operation.PLUS,
-            Operation.MINUS,
-            Operation.DIVIDE,
-            Operation.PERCENT,
-            Operation.MULTIPLICATION,
-            Operation.COMMA,
-            Operation.EQUAL
-        )
-        
         const val errorMessage = "Error"
     }
     
@@ -34,39 +13,48 @@ class CalculateExpression {
     private var expressionOperation: Operation? = null
     private var isError = false
     
-    private fun isActionInExpression(expression: String): Boolean {
-        val regex = ".*[+\\-*%±×÷].*".toRegex()
-        return regex.containsMatchIn(expression)
-    }
-    
-    private fun calculate(expression: String) {
+    private fun calculate(): String {
+        var firstNumber = firstOperand.toDouble()
+        val secondNumber = secondOperand.toDouble()
+        var result = 0.0
+        
+        if (firstOperandSign != null) {
+            firstNumber *= -1
+        }
+        
+        when (expressionOperation) {
+            Operation.MULTIPLICATION -> result = firstNumber * secondNumber
+            Operation.PLUS -> result = firstNumber + secondNumber
+            Operation.MINUS -> result = firstNumber - secondNumber
+            Operation.DIVIDE -> result = firstNumber / secondNumber
+            Operation.PERCENT -> result = firstNumber % secondNumber
+            else -> isError = true
+        }
+        
+        if (result.toInt().toDouble() == result) {
+            return result.toInt().toString()
+        }
+        
+        val roundedResult = floor(result * 100.0) / 100.0
+        return roundedResult.toString()
     }
     
     private fun getExpression(): String {
         var expression = ""
         if (firstOperandSign != null) {
-            expression += firstOperandSign.toString()
+            expression += firstOperandSign!!.Symbol
         }
         
         expression += firstOperand
         
         if (expressionOperation != null) {
-            expression += expressionOperation.toString() + secondOperand
+            expression += expressionOperation!!.Symbol + secondOperand
         }
         
         return expression
     }
     
-    private fun changeFirstOperandSign() {
-        if (firstOperandSign == null) {
-            firstOperandSign = Operation.MINUS
-            return
-        }
-        
-        firstOperandSign = null
-    }
-    
-    private fun onNumberOperation(expression: String?, operation: Operation) {
+    private fun onNumberOperation(operation: Operation) {
         if (expressionOperation == null) {
             firstOperand += operation.Symbol
         } else {
@@ -75,33 +63,64 @@ class CalculateExpression {
     }
     
     private fun onMathOperation(expression: String?, operation: Operation) {
-        if (expression == null) {
-            isError = true
+        if (expression == null || isError || ((expressionOperation != null) && secondOperand == "" && operation == Operation.EQUAL)) {
+            isError = true // if (isError == true) => extra assignment, but i don`t want to make another if () ...
             return
         }
         
-        if (expressionOperation != null && expression.indexOf(expressionOperation.toString()) == (expression.length - 1)) {
+        // change expression operation
+        if ((expressionOperation != null) && secondOperand == "") {
             expressionOperation = operation
             return
         }
         
+        // change the sign of the first operand
         if (operation == Operation.PLUS_MINUS) {
-            changeFirstOperandSign()
+            firstOperandSign = if (firstOperandSign == null) Operation.MINUS else null
             return
         }
+        
+        // add operation
+        if (expressionOperation == null) {
+            expressionOperation = operation
+            return
+        }
+        
+        // calculate new expression
+        val result = calculate()
+        resetExpression()
+        
+        if (result[0] == Operation.MINUS.Symbol) {
+            firstOperandSign = Operation.MINUS
+            firstOperand = (-result.toDouble()).toString()
+        } else {
+            firstOperandSign = null
+            firstOperand = result
+        }
+        
+        expressionOperation = if (operation != Operation.EQUAL) operation else null
+    }
+    
+    fun resetExpression() {
+        firstOperandSign = null
+        firstOperand = ""
+        secondOperand = ""
+        expressionOperation = null
+        isError = false
     }
     
     fun getValidatedExpression(expression: String?, operation: Operation): String {
-        if (operation in numberOperations) {
-            onNumberOperation(expression, operation)
+        if (operation.isNumber()) {
+            onNumberOperation(operation)
         } else {
             onMathOperation(expression, operation)
         }
         
         if (isError) {
-            return errorMessage;
+            return errorMessage
         }
         
+        isError = false
         return getExpression()
     }
 }
