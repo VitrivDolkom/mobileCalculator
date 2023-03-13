@@ -8,8 +8,8 @@ class CalcExpression {
     }
     
     private var firstOperandSign: Operation? = null
-    private var firstOperand = ""
-    private var secondOperand = ""
+    private var firstOperand: String = ""
+    private var secondOperand: String = ""
     private var expressionOperation: Operation? = null
     private var isError = false
     
@@ -107,6 +107,18 @@ class CalcExpression {
         secondOperand = ""
         expressionOperation = null
         isError = false
+    }
+    
+    fun eraseSymbol(): String {
+        if (secondOperand != "") {
+            secondOperand = secondOperand.replaceFirst(".$".toRegex(), "")
+        } else if (expressionOperation != null) {
+            expressionOperation = null
+        } else if (firstOperand != "") {
+            firstOperand = firstOperand.replaceFirst(".$".toRegex(), "")
+        }
+        
+        return getExpression()
     }
     
     fun getValidatedExpression(expression: String?, operation: Operation): String {

@@ -51,5 +51,9 @@ class MainActivity : AppCompatActivity() {
                 viewModel.changeExpression(operation)
             }
         }
+        
+        binding.expression.buttonErase.setOnClickListener {
+            viewModel.onEraseButtonClick()
+        }
     }
 }

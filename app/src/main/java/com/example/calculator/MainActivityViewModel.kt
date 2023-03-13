@@ -10,6 +10,10 @@ class MainActivityViewModel : ViewModel() {
     
     private val calcExpression = CalcExpression()
     
+    fun onEraseButtonClick() {
+        _currentExpression.value = calcExpression.eraseSymbol()
+    }
+    
     fun changeExpression(operation: Operation) {
         if (operation == Operation.RESET) {
             _currentExpression.value = ""
