@@ -8,15 +8,15 @@ class MainActivityViewModel : ViewModel() {
     private val _currentExpression = MutableLiveData<String>()
     val currentExpression: LiveData<String> get() = _currentExpression
     
-    private val calculateExpression = CalculateExpression()
+    private val calcExpression = CalcExpression()
     
     fun changeExpression(operation: Operation) {
         if (operation == Operation.RESET) {
             _currentExpression.value = ""
-            calculateExpression.resetExpression();
+            calcExpression.resetExpression();
             return
         }
         
-        _currentExpression.value = calculateExpression.getValidatedExpression(currentExpression.value, operation)
+        _currentExpression.value = calcExpression.getValidatedExpression(currentExpression.value, operation)
     }
 }

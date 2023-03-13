@@ -2,7 +2,7 @@ package com.example.calculator
 
 import kotlin.math.floor
 
-class CalculateExpression {
+class CalcExpression {
     companion object {
         const val errorMessage = "Error"
     }
