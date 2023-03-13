@@ -15,10 +15,7 @@ class MainActivity : AppCompatActivity() {
         val view = binding.root
         
         setOnButtonsClickListeners()
-        
-        viewModel.currentExpression.observe(this) {
-            binding.expression.expressionResultText.text = it.toString()
-        }
+        observeExpression()
         
         setContentView(view)
     }
@@ -52,8 +49,20 @@ class MainActivity : AppCompatActivity() {
             }
         }
         
-        binding.expression.buttonErase.setOnClickListener {
-            viewModel.onEraseButtonClick()
+        binding.expression.buttonErase.setOnClickListener { viewModel.onEraseButtonClick() }
+    }
+    
+    private fun observeExpression() {
+        viewModel.currentExpression.observe(this) {
+            binding.expression.expressionResultText.text = it.toString()
+        }
+        
+        viewModel.isError.observe(this) {
+            if (it) {
+                binding.expression.expressionResultText.setTextColor(getColor(R.color.text_error_expression))
+            } else {
+                binding.expression.expressionResultText.setTextColor(getColor(R.color.expression_result_text))
+            }
         }
     }
 }

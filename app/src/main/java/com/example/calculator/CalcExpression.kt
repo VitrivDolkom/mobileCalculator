@@ -2,11 +2,7 @@ package com.example.calculator
 
 import kotlin.math.floor
 
-class CalcExpression {
-    companion object {
-        const val errorMessage = "Error"
-    }
-    
+class CalcExpression(private val errorMessage: String) {
     private var firstOperandSign: Operation? = null
     private var firstOperand: String = ""
     private var secondOperand: String = ""
@@ -63,7 +59,7 @@ class CalcExpression {
     }
     
     private fun onMathOperation(expression: String?, operation: Operation) {
-        if (expression == null || isError || ((expressionOperation != null) && secondOperand == "" && operation == Operation.EQUAL)) {
+        if (expression == "" || expression == null || isError || ((expressionOperation != null) && secondOperand == "" && operation == Operation.EQUAL)) {
             isError = true // if (isError == true) => extra assignment, but i don`t want to make another if () ...
             return
         }
@@ -116,6 +112,8 @@ class CalcExpression {
             expressionOperation = null
         } else if (firstOperand != "") {
             firstOperand = firstOperand.replaceFirst(".$".toRegex(), "")
+        } else if (firstOperandSign != null) {
+            firstOperandSign = null
         }
         
         return getExpression()
