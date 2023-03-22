@@ -7,10 +7,14 @@
         <item name="android:textColor">@color/button_text</item>
         <item name="android:textSize">32sp</item>
         <item name="cornerRadius">32dp</item>
-        <item name="android:onClick">onCalculatorButtonsClick</item>
+        <item name="android:layout_marginTop">16dp</item>
     </style>
 
-    <style name="CalculatorButtonStyle.Red">
-        <item name="android:background">@drawable/round_corners_red</item>
+    <style name="CalculatorButtonStyle.Accent">
+        <item name="android:background">@drawable/round_corners_accent</item>
+    </style>
+
+    <style name="CalculatorButtonStyle.WithMarginRight">
+        <item name="android:layout_marginRight">16dp</item>
     </style>
 </resources>

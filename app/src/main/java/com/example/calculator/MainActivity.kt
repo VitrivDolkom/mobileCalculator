@@ -1,52 +1,68 @@
 package com.example.calculator
 
 import android.os.Bundle
-import android.view.View
-import android.widget.Button
+import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import com.example.calculator.databinding.ActivityMainBinding
 
 class MainActivity : AppCompatActivity() {
-    private lateinit var binding: ActivityMainBinding
-    private val calculateExpression = CalculateExpression()
+    private val binding by lazy { ActivityMainBinding.inflate(layoutInflater) }
+    private val viewModel by viewModels<MainViewModel>()
     
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        binding = ActivityMainBinding.inflate(layoutInflater)
+        
         val view = binding.root
+        
+        setOnButtonsClickListeners()
+        observeExpression()
         
         setContentView(view)
     }
     
-    fun onEraseButtonClick(it: View) {
-        val expressionText = binding.expression.expressionResultText.text
-        
-        binding.expression.expressionResultText.text = expressionText.toString().replaceFirst(".$".toRegex(), "")
-    }
-    
-    fun setExpressionColor(color: Int) {
-        binding.expression.expressionResultText.setTextColor(color)
-    }
-    
-    fun onCalculatorButtonsClick(it: View) {
-        val btn = it as Button
-        
-        if (btn.text.toString() == "AC") {
-            binding.expression.expressionResultText.text = "0"
-            setExpressionColor(getColor(R.color.expression_result_text))
-            return;
-        }
-        
-        val newText = calculateExpression.validatedExpressionWithNewSymbol(
-            btn.text.toString(), binding.expression.expressionResultText.text.toString()
+    private fun setOnButtonsClickListeners() {
+        val buttons = mapOf(
+            binding.buttons.buttonZero to Operation.ZERO,
+            binding.buttons.buttonOne to Operation.ONE,
+            binding.buttons.buttonTwo to Operation.TWO,
+            binding.buttons.buttonThree to Operation.THREE,
+            binding.buttons.buttonFour to Operation.FOUR,
+            binding.buttons.buttonFive to Operation.FIVE,
+            binding.buttons.buttonSix to Operation.SIX,
+            binding.buttons.buttonSeven to Operation.SEVEN,
+            binding.buttons.buttonEight to Operation.EIGHT,
+            binding.buttons.buttonNine to Operation.NINE,
+            binding.buttons.buttonComma to Operation.COMMA,
+            binding.buttons.buttonAc to Operation.RESET,
+            binding.buttons.buttonPlus to Operation.PLUS,
+            binding.buttons.buttonMinus to Operation.MINUS,
+            binding.buttons.buttonPlusMinus to Operation.PLUS_MINUS,
+            binding.buttons.buttonDivide to Operation.DIVIDE,
+            binding.buttons.buttonPercent to Operation.PERCENT,
+            binding.buttons.buttonMultiplication to Operation.MULTIPLICATION,
+            binding.buttons.buttonEqual to Operation.EQUAL
         )
         
-        if (newText == "Error") {
-            setExpressionColor(getColor(R.color.text_error_expression))
-        } else {
-            setExpressionColor(getColor(R.color.expression_result_text))
+        buttons.forEach { (button, operation) ->
+            button.setOnClickListener {
+                viewModel.changeExpression(operation)
+            }
         }
         
-        binding.expression.expressionResultText.text = newText
+        binding.expression.buttonErase.setOnClickListener { viewModel.onEraseButtonClick() }
+    }
+    
+    private fun observeExpression() {
+        viewModel.currentExpression.observe(this) {
+            binding.expression.expressionResultText.text = it.toString()
+        }
+        
+        viewModel.isError.observe(this) {
+            if (it) {
+                binding.expression.expressionResultText.setTextColor(getColor(R.color.text_error_expression))
+            } else {
+                binding.expression.expressionResultText.setTextColor(getColor(R.color.expression_result_text))
+            }
+        }
     }
 }
