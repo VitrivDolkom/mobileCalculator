@@ -11,7 +11,7 @@
     </style>
 
     <style name="CalculatorButtonStyle.Accent">
-        <item name="android:background">@drawable/round_corners_red</item>
+        <item name="android:background">@drawable/round_corners_accent</item>
     </style>
 
     <style name="CalculatorButtonStyle.WithMarginRight">

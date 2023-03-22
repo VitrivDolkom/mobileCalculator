@@ -8,6 +8,7 @@ class CalcExpression(private val errorMessage: String) {
     private var secondOperand: String = ""
     private var expressionOperation: Operation? = null
     private var isError = false
+    var fullExpression = ""
     
     private fun calculate(): String {
         var firstNumber = firstOperand.toDouble()
@@ -27,7 +28,7 @@ class CalcExpression(private val errorMessage: String) {
             else -> isError = true
         }
         
-        if (result.toInt().toDouble() == result) {
+        if (result % 1.0 == 0.0) {
             return result.toInt().toString()
         }
         
@@ -35,32 +36,50 @@ class CalcExpression(private val errorMessage: String) {
         return roundedResult.toString()
     }
     
-    private fun getExpression(): String {
+    private fun setExpression() {
         var expression = ""
         if (firstOperandSign != null) {
-            expression += firstOperandSign!!.Symbol
+            expression += firstOperandSign!!.symbol
         }
         
         expression += firstOperand
         
         if (expressionOperation != null) {
-            expression += expressionOperation!!.Symbol + secondOperand
+            expression += expressionOperation!!.symbol + secondOperand
         }
         
-        return expression
+        fullExpression = expression
     }
     
     private fun onNumberOperation(operation: Operation) {
         if (expressionOperation == null) {
-            firstOperand += operation.Symbol
+            firstOperand += operation.symbol
         } else {
-            secondOperand += operation.Symbol
+            secondOperand += operation.symbol
         }
     }
     
+    private fun formNewExpression(operation: Operation) {
+        val result = calculate()
+        resetExpression()
+        
+        if (result[0] == Operation.MINUS.symbol) {
+            firstOperandSign = Operation.MINUS
+            firstOperand = (-result.toDouble()).toString()
+        } else {
+            firstOperandSign = null
+            firstOperand = result
+        }
+        
+        expressionOperation = if (operation != Operation.EQUAL) operation else null
+    }
+    
+    private fun checkExpressionError(expression: String?, operation: Operation): Boolean =
+        expression == "" || expression == null || isError || ((expressionOperation != null) && secondOperand == "" && operation == Operation.EQUAL)
+    
     private fun onMathOperation(expression: String?, operation: Operation) {
-        if (expression == "" || expression == null || isError || ((expressionOperation != null) && secondOperand == "" && operation == Operation.EQUAL)) {
-            isError = true // if (isError == true) => extra assignment, but i don`t want to make another if () ...
+        if (checkExpressionError(expression, operation)) {
+            isError = true
             return
         }
         
@@ -82,19 +101,7 @@ class CalcExpression(private val errorMessage: String) {
             return
         }
         
-        // calculate new expression
-        val result = calculate()
-        resetExpression()
-        
-        if (result[0] == Operation.MINUS.Symbol) {
-            firstOperandSign = Operation.MINUS
-            firstOperand = (-result.toDouble()).toString()
-        } else {
-            firstOperandSign = null
-            firstOperand = result
-        }
-        
-        expressionOperation = if (operation != Operation.EQUAL) operation else null
+        formNewExpression(operation)
     }
     
     fun resetExpression() {
@@ -103,9 +110,11 @@ class CalcExpression(private val errorMessage: String) {
         secondOperand = ""
         expressionOperation = null
         isError = false
+        
+        setExpression()
     }
     
-    fun eraseSymbol(): String {
+    fun eraseSymbol() {
         if (secondOperand != "") {
             secondOperand = secondOperand.replaceFirst(".$".toRegex(), "")
         } else if (expressionOperation != null) {
@@ -116,10 +125,10 @@ class CalcExpression(private val errorMessage: String) {
             firstOperandSign = null
         }
         
-        return getExpression()
+        setExpression()
     }
     
-    fun getValidatedExpression(expression: String?, operation: Operation): String {
+    fun getValidatedExpression(expression: String?, operation: Operation) {
         if (operation.isNumber()) {
             onNumberOperation(operation)
         } else {
@@ -127,10 +136,11 @@ class CalcExpression(private val errorMessage: String) {
         }
         
         if (isError) {
-            return errorMessage
+            fullExpression = errorMessage
+            return
         }
         
         isError = false
-        return getExpression()
+        setExpression()
     }
 }

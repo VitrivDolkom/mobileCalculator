@@ -10,7 +10,7 @@
     <color name="app_background">#1D1B1E</color>
     <color name="title">#E6E1E5</color>
     <color name="button_background">#4A4458</color>
-    <color name="button_background_red">#633B48</color>
+    <color name="button_background_accent">#633B48</color>
     <color name="button_text">#E8DEF8</color>
     <color name="expression_result_text">#D0BCFF</color>
     <color name="line_background">#49454F</color>
